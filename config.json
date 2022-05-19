@@ -1,0 +1,10 @@
+{
+    "url": "",
+    "useconfigurl": false,
+    "useragents": "./useragents.txt",
+    "proxies": "./proxy.txt",
+    "useproxies": false,
+    "referers": "./referers.txt",
+    "safemode": true,
+    "ignorestatuscode": [200]
+}
