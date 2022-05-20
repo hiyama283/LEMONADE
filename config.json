@@ -2,7 +2,7 @@
     "url": [
         "https://example.com"
     ],
-    "useconfigurl": false,
+    "useconfigurl": true,
     "method": "GET",
     "payload": {},
     "useragents": "./ua.txt",
