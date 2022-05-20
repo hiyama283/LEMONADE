@@ -104,6 +104,7 @@ class httpcall(threading.Thread):
         self.timeout = int(config["thread"]["timeout"])
         self.normaldelay = int(config["thread"]["normaldelay"])
         self.usenormaldelay = config["thread"]["usenormaldelay"]
+        self.nodelay = config["thread"]["nodelay"]
         
         self.useproxies = config["useproxies"]
         self.limiter = config["thread"]["limiter"]
@@ -183,7 +184,9 @@ class httpcall(threading.Thread):
                             host.remove(b)
                     except:
                         pass
-            if self.limiter == True:
+            if self.nodelay == True:
+                continue
+            elif self.limiter == True:
                 time.sleep(random.randint(600,3000) / 1000)
             elif self.randomdelay == True:
                 time.sleep(random.randint(self.mindelay,self.maxdelay) / 1000)

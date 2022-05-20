@@ -13,6 +13,7 @@
     "proxies": "./proxy.txt",
     "useproxies": false,
     "thread": {
+        "nodelay": false,
         "mindelay": 100,
         "maxdelay": 1000,
         "randomdelay": true,
