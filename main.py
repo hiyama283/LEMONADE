@@ -215,8 +215,8 @@ try:
         #print(f"Summary Requested: {request_counter}")
         if flag == 2:
             print("LEMONADE stopped Attacking")
-            os._exit()
+            os._exit(0)
         time.sleep(0.05)
 except KeyboardInterrupt:
     print("LEMONADE stopped Attacking")
-    os._exit()
+    os._exit(0)
