@@ -2,10 +2,10 @@
     "url": [
         "https://example.com"
     ],
-    "useconfigurl": false,
+    "useconfigurl": true,
     "method": "GET",
     "payload": {},
-    "useragents": "./useragents.txt",
+    "useragents": "./ua.txt",
     "referers": "./referers.txt",
     "safemode": true,
     "ignorestatuscode": [200,301],
@@ -16,7 +16,7 @@
         "maxdelay": 1000,
         "randomdelay": true,
         "maxthreads": 1000,
-        "limiter": true
-    },
-    "autoshutdown": true
+        "limiter": true,
+        "timeout": 100
+    }
 }
