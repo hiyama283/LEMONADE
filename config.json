@@ -1,0 +1,22 @@
+{
+    "url": [
+        "https://example.com"
+    ],
+    "method": "GET",
+    "payload": {},
+    "useconfigurl": false,
+    "useragents": "./useragents.txt",
+    "referers": "./referers.txt",
+    "safemode": true,
+    "ignorestatuscode": [200,301],
+    "proxies": "./proxy.txt",
+    "useproxies": false,
+    "thread": {
+        "mindelay": 100,
+        "maxdelay": 1000,
+        "randomdelay": false,
+        "maxthreads": 500,
+        "limiter": true
+    },
+    "autoshutdown": true
+}
