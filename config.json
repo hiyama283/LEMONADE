@@ -16,6 +16,7 @@
         "maxdelay": 1000,
         "randomdelay": true,
         "maxthreads": 1000,
-        "limiter": true
+        "limiter": true,
+        "timeout": 100
     }
 }
