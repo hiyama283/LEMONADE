@@ -95,6 +95,7 @@ class httpcall(threading.Thread):
         self.url = url
         self.host = host
         self.autoshutdown = config["autoshutdown"]
+        self.randomdelay = config["thread"]["randomdelay"]
         self.payload = json.loads(config["payload"])
         self.useragents = useragents
         self.referers = referers
@@ -174,9 +175,11 @@ class httpcall(threading.Thread):
                 except:
                     pass
             if self.limiter == True:
-                time.sleep(random.randint(600,5000) / 1000)
-            else:
+                time.sleep(random.randint(600,3000) / 1000)
+            elif self.randomdelay == True:
                 time.sleep(random.randint(self.mindelay,self.maxdelay) / 1000)
+            else:
+                pass
         httpcall.start()
         return
 

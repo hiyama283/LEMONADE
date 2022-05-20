@@ -2,9 +2,9 @@
     "url": [
         "https://example.com"
     ],
+    "useconfigurl": false,
     "method": "GET",
     "payload": {},
-    "useconfigurl": false,
     "useragents": "./useragents.txt",
     "referers": "./referers.txt",
     "safemode": true,
@@ -14,8 +14,8 @@
     "thread": {
         "mindelay": 100,
         "maxdelay": 1000,
-        "randomdelay": false,
-        "maxthreads": 500,
+        "randomdelay": true,
+        "maxthreads": 1000,
         "limiter": true
     },
     "autoshutdown": true
