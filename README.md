@@ -33,6 +33,8 @@ config.jsonのjson機能はpost機能でないと機能しません。
 
 ## thread
 
+"nodelay" これをオンにすると他の設定をガン無視してリクエストを送信しまくります
+
 "mindelay" randomdelayオプションが有効な場合にランダム生成したスリープミリ秒の最小値です
 
 "maxdelay" randomdelayオプションが有効な場合にランダム生成したスリープミリ秒の最大値です
