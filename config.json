@@ -5,6 +5,7 @@
     "useconfigurl": true,
     "method": "GET",
     "payload": {},
+    "json": {},
     "useragents": "./ua.txt",
     "referers": "./referers.txt",
     "safemode": true,
@@ -15,6 +16,8 @@
         "mindelay": 100,
         "maxdelay": 1000,
         "randomdelay": true,
+        "normaldelay": 500,
+        "usenormaldelay": true,
         "maxthreads": 1000,
         "limiter": true,
         "timeout": 100
