@@ -5,7 +5,7 @@
     "useconfigurl": false,
     "method": "GET",
     "payload": {},
-    "useragents": "./useragents.txt",
+    "useragents": "./ua.txt",
     "referers": "./referers.txt",
     "safemode": true,
     "ignorestatuscode": [200,301],
@@ -17,6 +17,5 @@
         "randomdelay": true,
         "maxthreads": 1000,
         "limiter": true
-    },
-    "autoshutdown": true
+    }
 }

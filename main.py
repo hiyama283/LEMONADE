@@ -25,6 +25,7 @@ def set_flag(num):
     flag = num
 
 def isignorestatus(statscode):
+    global config
     if config["safemode"] == True:
         for i in config["ignorestatuscode"]:
             if i == statscode:
@@ -94,7 +95,6 @@ class httpcall(threading.Thread):
         global host
         self.url = url
         self.host = host
-        self.autoshutdown = config["autoshutdown"]
         self.randomdelay = config["thread"]["randomdelay"]
         self.payload = json.loads(config["payload"])
         self.useragents = useragents
@@ -133,8 +133,7 @@ class httpcall(threading.Thread):
                         requestcnt()
                     else:
                         print("A request error has occurred. StatusCode:"+lres.status_code)
-                        if self.autoshutdown == True:
-                            set_flag(2)
+                        set_flag(2)
                 except requests.ConnectTimeout:
                     pass
                 except requests.HTTPError:
@@ -163,8 +162,7 @@ class httpcall(threading.Thread):
                         requestcnt()
                     else:
                         print("A request error has occurred. StatusCode:"+lres.status_code)
-                        if self.autoshutdown == True:
-                            set_flag(2)
+                        set_flag(2)
                 except requests.ConnectTimeout:
                     pass
                 except requests.HTTPError:
