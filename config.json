@@ -6,6 +6,7 @@
     "method": "GET",
     "payload": {},
     "usepayload": false,
+    "headers": {},
     "useragents": "./ua.txt",
     "referers": "./referers.txt",
     "safemode": true,
