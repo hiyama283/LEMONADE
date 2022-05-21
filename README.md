@@ -13,7 +13,7 @@ dictknifeモジュールが必要です
 
 ## 実行中の画面
 
-![top-page](https://raw.githubusercontent.com/distriful5061/LEMONADE/images/lemonade.png)
+![image1](https://raw.githubusercontent.com/distriful5061/LEMONADE/images/lemonade.png)
 
 # config.jsonの使い方
 
