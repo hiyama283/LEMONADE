@@ -230,7 +230,7 @@ class MonitorThread(threading.Thread):
 
 print(url)
 print(host)
-print("-----LEMONADE started Attacking-----")
+print("---------------LEMONADE started Attacking---------------")
 MonitorThread().start()
 for i in range(thrd):
     httpcall().start()
@@ -239,12 +239,12 @@ try:
     while True:
         #print(f"Summary Requested: {request_counter}")
         if flag == 2:
-            print("-----LEMONADE stopped Attacking-----")
+            print("---------------LEMONADE stopped Attacking---------------")
             os._exit(0)
         if len(url) == 0:
-            print("-----LEMONADE stopped Attacking-----")
+            print("---------------LEMONADE stopped Attacking---------------")
             os._exit(0)
         time.sleep(0.05)
 except KeyboardInterrupt:
-    print("-----LEMONADE stopped Attacking-----")
+    print("---------------LEMONADE stopped Attacking---------------")
     os._exit(0)
