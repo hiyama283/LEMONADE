@@ -5,7 +5,7 @@
     "useconfigurl": true,
     "method": "GET",
     "payload": {},
-    "json": {},
+    "usepayload": false,
     "useragents": "./ua.txt",
     "referers": "./referers.txt",
     "safemode": true,

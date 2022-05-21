@@ -15,7 +15,7 @@ config.jsonのjson機能はpost機能でないと機能しません。
 
 "payload" リクエストのペイロードです。以上！！！
 
-"json" リクエストのjsonパラメーターです。json受け取りを使用しているapiなどに有効です
+"json" リクエストのjsonパラメーターです。json受け取りを使用しているapiなどに有効です(廃止されました。LEMONADE VODKA SPECIALにて再実装予定です)
 
 "useragents" ユーザーエージェントのパスです。
 
