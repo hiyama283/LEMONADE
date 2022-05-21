@@ -212,14 +212,21 @@ class httpcall(threading.Thread):
         httpcall().start()
         return
 
+
 class MonitorThread(threading.Thread):
     def __init__(self):
         threading.Thread.__init__(self)
+        self.beforerequestcount = 0
+        self.newrequest = []
     def run(self):
         while True:
-            global request_counter
-            print(f"Summary Requested: {request_counter}")
             time.sleep(5)
+            self.newrequest.append(request_counter - self.beforerequestcount)
+            allcount = 0
+            for i in self.newrequest:
+                allcount += i
+            print(f"Summary All:{request_counter}/New Request:{request_counter - self.beforerequestcount}/Average new request:{round(allcount / len(self.newrequest))}")
+            self.beforerequestcount = request_counter
 
 print(url)
 print(host)
