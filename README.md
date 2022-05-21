@@ -11,6 +11,10 @@ config.jsonのjson機能はpostでないと機能しません。
 
 dictknifeモジュールが必要です
 
+## 実行中の画面
+
+![LEMONADE](https://imgur.com/a/2nd2TZF "実行中の画面")
+
 # config.jsonの使い方
 
 "url" リクエストを行うアドレスのリストです。Listの知識があればできると思います

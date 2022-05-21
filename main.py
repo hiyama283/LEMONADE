@@ -6,8 +6,7 @@ import requests
 import sys
 import time
 import os
-from pystyle import Center, Colors, Colorate
-from colorama import Fore, Back, Style
+from colorama import Fore
 
 
 try:
