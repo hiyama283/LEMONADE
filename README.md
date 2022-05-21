@@ -9,6 +9,8 @@ config.jsonのjson機能はpostでないと機能しません。
 
 プロキシはHTTPのみ対応しています
 
+dictknifeモジュールが必要です
+
 # config.jsonの使い方
 
 "url" リクエストを行うアドレスのリストです。Listの知識があればできると思います
