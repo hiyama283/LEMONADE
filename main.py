@@ -30,10 +30,11 @@ print(f"""{Fore.LIGHTYELLOW_EX}
                         ██      █████   ██ ████ ██ ██    ██ ██ ██  ██ ███████ ██   ██ █████   
                         ██      ██      ██  ██  ██ ██    ██ ██  ██ ██ ██   ██ ██   ██ ██      
                         ███████ ███████ ██      ██  ██████  ██   ████ ██   ██ ██████  ███████ {Fore.RESET}
-                                                    {Fore.LIGHTMAGENTA_EX}version 2.5{Fore.RESET}   
+                                                    {Fore.LIGHTMAGENTA_EX}version 2.5{Fore.RESET}   {Fore.RESET}
+
+
+
 """)
-for _ in range(3):
-    print("")
 with open("./config.json","r") as f:
     config = json.load(f);
 
