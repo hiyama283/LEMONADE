@@ -168,9 +168,20 @@ class httpcall(threading.Thread):
                 if proxy == "":
                     try:
                         if self.usepayload == True:
-                            lres = requests.request(self.method,f"{useurl}{param_joiner}{buildblock(random.randint(3,10))}={buildblock(random.randint(3,10))}",headers=header,data=self.payload, timeout=self.timeout)
+                            lres = requests.request(
+                                self.method,
+                                f"{useurl}{param_joiner}{buildblock(random.randint(3,10))}={buildblock(random.randint(3,10))}",
+                                headers=header,
+                                data=self.payload,
+                                timeout=self.timeout
+                                )
                         else:
-                            lres = requests.request(self.method,f"{useurl}{param_joiner}{buildblock(random.randint(3,10))}={buildblock(random.randint(3,10))}",headers=header, timeout=self.timeout)
+                            lres = requests.request(
+                                self.method,
+                                f"{useurl}{param_joiner}{buildblock(random.randint(3,10))}={buildblock(random.randint(3,10))}",
+                                headers=header,
+                                timeout=self.timeout
+                                )
                         #print(lres.text)
                         #proxies.append(proxy)
                     except Exception as e:
@@ -181,14 +192,25 @@ class httpcall(threading.Thread):
                 else:
                     try:
                         if self.usepayload == True:
-                            lres = requests.request(self.method,f"{useurl}{param_joiner}{buildblock(random.randint(3,10))}={buildblock(random.randint(3,10))}",headers=header, data=self.payload, timeout=self.timeout, proxies={
-                                "http":"http://"+proxy,
-                                "https":"http://"+proxy,
+                            lres = requests.request(
+                                self.method,
+                                f"{useurl}{param_joiner}{buildblock(random.randint(3,10))}={buildblock(random.randint(3,10))}",
+                                headers=header,
+                                data=self.payload,
+                                timeout=self.timeout,
+                                proxies={
+                                    "http":"http://"+proxy,
+                                    "https":"http://"+proxy,
                             })
                         else:
-                            lres = requests.request(self.method,f"{useurl}{param_joiner}{buildblock(random.randint(3,10))}={buildblock(random.randint(3,10))}",headers=header, timeout=self.timeout, proxies={
-                                "http":"http://"+proxy,
-                                "https":"http://"+proxy,
+                            lres = requests.request(
+                                self.method,
+                                f"{useurl}{param_joiner}{buildblock(random.randint(3,10))}={buildblock(random.randint(3,10))}",
+                                headers=header,
+                                timeout=self.timeout,
+                                proxies={
+                                    "http":"http://"+proxy,
+                                    "https":"http://"+proxy,
                             })
                         proxies.append(proxy)
                     except Exception as e:
