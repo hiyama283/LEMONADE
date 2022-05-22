@@ -16,10 +16,9 @@ except:
     os._exit(0)
 
 os.system("cls")
+os.system("title LEMONADE ver2.5")
 time.sleep(0.5)
 print(f"""{Fore.LIGHTYELLOW_EX}
-
-
 
 
 
@@ -31,6 +30,7 @@ print(f"""{Fore.LIGHTYELLOW_EX}
                         ██      █████   ██ ████ ██ ██    ██ ██ ██  ██ ███████ ██   ██ █████   
                         ██      ██      ██  ██  ██ ██    ██ ██  ██ ██ ██   ██ ██   ██ ██      
                         ███████ ███████ ██      ██  ██████  ██   ████ ██   ██ ██████  ███████ {Fore.RESET}
+                                                    {Fore.LIGHTMAGENTA_EX}version 2.5{Fore.RESET}   
 """)
 for _ in range(3):
     print("")
@@ -244,7 +244,7 @@ class MonitorThread(threading.Thread):
 
 #print(url)
 #print(host)
-print("                            ---------------LEMONADE started Attacking---------------")
+print("                            -----------------LEMONADE started Attacking-----------------")
 try:
     MonitorThread().start()
     for i in range(thrd):
@@ -253,12 +253,12 @@ try:
     while True:
         #print(f"Summary Requested: {request_counter}")
         if flag == 2:
-            print("\n                            ---------------LEMONADE stopped Attacking---------------")
+            print("\n                            -----------------LEMONADE stopped Attacking-----------------")
             os._exit(0)
         if len(url) == 0:
-            print("\n                          ---------------LEMONADE stopped Attacking---------------")
+            print("\n                          -----------------LEMONADE stopped Attacking-----------------")
             os._exit(0)
         time.sleep(0.05)
 except KeyboardInterrupt:
-    print("\n                            ---------------LEMONADE stopped Attacking---------------")
+    print("\n                            -----------------LEMONADE stopped Attacking-----------------")
     os._exit(0)
