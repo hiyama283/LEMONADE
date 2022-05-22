@@ -16,10 +16,9 @@ except:
     os._exit(0)
 
 os.system("cls")
+os.system("title LEMONADE ver2.5")
 time.sleep(0.5)
 print(f"""{Fore.LIGHTYELLOW_EX}
-
-
 
 
 
@@ -31,6 +30,7 @@ print(f"""{Fore.LIGHTYELLOW_EX}
                         ██      █████   ██ ████ ██ ██    ██ ██ ██  ██ ███████ ██   ██ █████   
                         ██      ██      ██  ██  ██ ██    ██ ██  ██ ██ ██   ██ ██   ██ ██      
                         ███████ ███████ ██      ██  ██████  ██   ████ ██   ██ ██████  ███████ {Fore.RESET}
+                                                    {Fore.LIGHTMAGENTA_EX}version 2.5{Fore.RESET}   
 """)
 for _ in range(3):
     print("")
@@ -232,19 +232,19 @@ class MonitorThread(threading.Thread):
         self.newrequest = []
     def run(self):
         while True:
-            time.sleep(0.5)
+            time.sleep(1)
             self.newrequest.append(request_counter - self.beforerequestcount)
             allcount = 0
             for i in self.newrequest:
                 allcount += i
-            print(f"\r                            Summary All:{request_counter}/New Request:{request_counter - self.beforerequestcount}/Average new request:{round(allcount / len(self.newrequest))}",end="")
+            print(f"\r                            Summary All:{request_counter}\n                            New Request:{request_counter - self.beforerequestcount}\n                            Average new request:{round(allcount / len(self.newrequest))}\033[2A",end="")
             self.beforerequestcount = request_counter
 
 
 
 #print(url)
 #print(host)
-print("                            ---------------LEMONADE started Attacking---------------")
+print("                            -----------------LEMONADE started Attacking-----------------")
 try:
     MonitorThread().start()
     for i in range(thrd):
@@ -253,12 +253,12 @@ try:
     while True:
         #print(f"Summary Requested: {request_counter}")
         if flag == 2:
-            print("\n                            ---------------LEMONADE stopped Attacking---------------")
+            print("\n                            -----------------LEMONADE stopped Attacking-----------------")
             os._exit(0)
         if len(url) == 0:
-            print("\n                          ---------------LEMONADE stopped Attacking---------------")
+            print("\n                          -----------------LEMONADE stopped Attacking-----------------")
             os._exit(0)
         time.sleep(0.05)
 except KeyboardInterrupt:
-    print("\n                            ---------------LEMONADE stopped Attacking---------------")
+    print("\n                            -----------------LEMONADE stopped Attacking-----------------")
     os._exit(0)
