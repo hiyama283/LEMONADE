@@ -253,13 +253,14 @@ class MonitorThread(threading.Thread):
         self.beforerequestcount = 0
         self.newrequest = []
     def run(self):
+        print("\n                            ")
         while True:
             time.sleep(1)
             self.newrequest.append(request_counter - self.beforerequestcount)
             allcount = 0
             for i in self.newrequest:
                 allcount += i
-            print(f"\r                            Summary All:{request_counter}\n                            New Request:{request_counter - self.beforerequestcount}\n                            Average new request:{round(allcount / len(self.newrequest))}\033[2A",end="")
+            print(f"\033[2A\r                            Summary All:{request_counter}\n                            New Request:{request_counter - self.beforerequestcount}\n                            Average new request:{round(allcount / len(self.newrequest))}",end="")
             self.beforerequestcount = request_counter
 
 
