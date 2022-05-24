@@ -48,8 +48,8 @@ with open("./config.json","r") as f:
 
 url = ""
 host = ""
-useragents = ""
-referers = ""
+useragents = []
+referers = []
 request_counter = 0
 
 flag = 0
@@ -124,6 +124,9 @@ with open(config["proxies"],"r") as f:
 
 useragent_list()
 referer_list()
+
+for hosta in host:
+    referers.append(f"https://{hosta}/")
 
 class httpcall(threading.Thread):
     def __init__(self):
