@@ -11,6 +11,8 @@ config.jsonのjson機能はpostでないと機能しません。
 
 dictknifeモジュールが必要です
 
+coloramaモジュールが必要です
+
 ## 実行中の画面
 
 ![image1](https://raw.githubusercontent.com/distriful5061/LEMONADE/images/lemonade1.png)

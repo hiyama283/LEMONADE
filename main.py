@@ -165,7 +165,8 @@ class httpcall(threading.Thread):
                 except IndexError:
                     continue
                 langcodea = lang()
-                contenttypes = ["text/html","text/plain","application/json","text/csv","application/pdf","application/zip","application/xslm","text/css"]
+                contentencodings = ["gzip","compress","identity","deflate","br"]
+                contenttypes = ["text/plain","application/json","text/csv","application/pdf","application/zip","application/xslm","text/css"]
                 accepts = [f"text/html,{random.choice(contenttypes)},{random.choice(contenttypes)},{random.choice(contenttypes)};q=0.{random.randint(4,9)}",f"*/*;q=0.{random.randint(4,9)}","*/*"]
                 acceptcharset = ["ISO-8859-1","shift-jis","US-ASCII","utf-8"]
                 tmp = []
@@ -173,6 +174,7 @@ class httpcall(threading.Thread):
                     "Accept":random.choice(accepts),
                     "User-Agent": random.choice(self.useragents),
                     "Cache-Control": "no-cache",
+                    "Accept-Encoding": random.choice(contentencodings),
                     "Accept-Charset": f"{random.choice(acceptcharset)};q=0.7,*;q=0.7",
                     "Referer": random.choice(self.referers) + buildblock(random.randint(5,10)),
                     "Keep-Alive": str(random.randint(110,120)),
@@ -185,6 +187,7 @@ class httpcall(threading.Thread):
                     "User-Agent": random.choice(self.useragents),
                     "Cache-Control": "no-cache",
                     "Accept-Charset": f"{random.choice(acceptcharset)};q=0.7,*;q=0.7",
+                    "Accept-Encoding": random.choice(contentencodings),
                     "content-type": random.choice(contenttypes),#
                     "Referer": random.choice(self.referers) + buildblock(random.randint(5,10)),
                     "Keep-Alive": str(random.randint(110,120)),
@@ -208,6 +211,7 @@ class httpcall(threading.Thread):
                     "User-Agent": random.choice(self.useragents),
                     "Cache-Control": "no-cache",
                     "Accept-Charset": f"{random.choice(acceptcharset)};q=0.7,*;q=0.7",
+                    "Accept-Encoding": random.choice(contentencodings),
                     "content-type": random.choice(contenttypes),#
                     "Referer": random.choice(self.referers) + buildblock(random.randint(5,10)),
                     "Accept-Language": f"{langcodea},{langcodea};q=0.{random.randint(4,9)}",
