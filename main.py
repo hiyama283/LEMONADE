@@ -179,6 +179,7 @@ class httpcall(threading.Thread):
                     "Cache-Control": "no-cache",
                     "Accept-Encoding": random.choice(contentencodings),
                     "Accept-Charset": f"{random.choice(acceptcharset)};q=0.7,*;q=0.7",
+                    "Origin":f"https://{host[k]}",
                     "Referer": random.choice(self.referers) + buildblock(random.randint(5,10)),
                     "Keep-Alive": str(random.randint(110,120)),
                     "Accept-Language": f"{langcodea},{langcodea};q=0.{random.randint(4,9)}",
@@ -215,6 +216,7 @@ class httpcall(threading.Thread):
                     "Cache-Control": "no-cache",
                     "Accept-Charset": f"{random.choice(acceptcharset)};q=0.7,*;q=0.7",
                     "Accept-Encoding": random.choice(contentencodings),
+                    "Origin":f"https://{host[k]}",
                     "content-type": random.choice(contenttypes),#
                     "Referer": random.choice(self.referers) + buildblock(random.randint(5,10)),
                     "Accept-Language": f"{langcodea},{langcodea};q=0.{random.randint(4,9)}",
@@ -225,6 +227,7 @@ class httpcall(threading.Thread):
                     "User-Agent": random.choice(self.useragents),
                     "Cache-Control": "no-cache",
                     "Accept-Charset": f"{random.choice(acceptcharset)};q=0.7,*;q=0.7",
+                    "Origin":f"https://{host[k]}",
                     "content-type": random.choice(contenttypes),#
                     "Referer": random.choice(self.referers) + buildblock(random.randint(5,10)),
                     "Accept-Language": f"{langcodea},{langcodea};q=0.{random.randint(4,9)}"
