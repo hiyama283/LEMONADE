@@ -92,6 +92,10 @@ def buildblock(size):
         out_str += random.choice(string.ascii_letters)
     return out_str
 
+langcode = ["aa","ab","af","ak","sq","am","ar","an","hy","as","av","ae","ay","az","ba","bm","eu","be","bn","bh","bi","bs","br","bg","my","ca","ch","ce","zh","zh-CN","zh-TW","cu","cv","kw","co","cr","cs","da","dv","nl","dz","en","en-US","en-GB","en-CA","en-AU","eo","et","ee","fo","fj","fi","fr","fr-CA","fy","ff","ka","de","gd","ga","gl","gv","el","gn","gu","ht","ha","he","hz","hi","ho","hu","ig","is","io","ii","iu","ie","ia","id","ik","it","jv","ja","kl","kn","ks","kr","kk","km","ki","rw","ky","kv","kg","ko","kj","ku","lo","la","lv","li","ln","lt","lb","lu","lg","mk","mh"]
+def lang():
+    global langcode
+    return random.choice(langcode)
 if(config["useconfigurl"] == False):
     url = []
     url.append(input("                            URL:"))
@@ -154,13 +158,13 @@ class httpcall(threading.Thread):
                     proxy = ""
                     if self.useproxies == True:
                         proxy = proxies.pop(0)
-
                     if useurl.count("?") > 0:
                         param_joiner = "&"
                     else:
                         param_joiner = "?"
                 except IndexError:
                     continue
+                langcodea = lang()
                 tmp = {
                     "User-Agent": random.choice(self.useragents),
                     "Cache-Control": "no-cache",
@@ -168,6 +172,7 @@ class httpcall(threading.Thread):
                     "content-type": "application/json",
                     "Referer": random.choice(self.referers) + buildblock(random.randint(5,10)),
                     "Keep-Alive": str(random.randint(110,120)),
+                    "Accept-Language": f"{langcodea},{langcodea};q=0.{random.randint(4,9)}",
                     "Connection": "keep-alive",
                     "Host": usehost
                 }
@@ -250,6 +255,7 @@ class httpcall(threading.Thread):
                 time.sleep(self.normaldelay / 1000)
             else:
                 pass
+        time.sleep(1)
         httpcall().start()
         return
 
