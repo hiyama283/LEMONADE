@@ -88,7 +88,7 @@ def referer_list():
 
 def buildblock(size):
     out_str = ""
-    for i in range(size):
+    for _ in range(size):
         out_str += random.choice(string.ascii_letters)
     return out_str
 
