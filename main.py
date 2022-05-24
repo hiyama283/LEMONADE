@@ -165,7 +165,7 @@ class httpcall(threading.Thread):
                 except IndexError:
                     continue
                 langcodea = lang()
-                contenttypes = ["text/html","text/plain; ","application/json","text/csv","application/pdf","application/zip"]
+                contenttypes = ["text/html","text/plain","application/json","text/csv","application/pdf","application/zip","application/xslm","text/css"]
                 accepts = [f"text/html,{random.choice(contenttypes)},{random.choice(contenttypes)},{random.choice(contenttypes)};q=0.{random.randint(4,9)}",f"*/*;q=0.{random.randint(4,9)}","*/*"]
                 acceptcharset = ["ISO-8859-1","shift-jis","US-ASCII","utf-8"]
                 tmp = []
