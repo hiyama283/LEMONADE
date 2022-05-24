@@ -6,13 +6,20 @@ import requests
 import sys
 import time
 import os
-from colorama import Fore
+import string
 
+try:
+    from colorama import Fore
+except:
+    print("coloramaモジュールが見つかりませんでした。\npip install colorama してインストールしてください")
+    os.system("pause")
+    os._exit(0)
 
 try:
     from dictknife import deepmerge
 except:
     print("dictknifeモジュールが見つかりませんでした。\npip install dictknife してインストールしてください")
+    os.system("pause")
     os._exit(0)
 
 os.system("cls")
@@ -82,8 +89,7 @@ def referer_list():
 def buildblock(size):
     out_str = ""
     for i in range(size):
-        a = random.randint(65,90)
-        out_str += chr(a)
+        out_str += random.choice(string.ascii_letters)
     return out_str
 
 if(config["useconfigurl"] == False):
