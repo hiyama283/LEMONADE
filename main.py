@@ -174,7 +174,7 @@ class httpcall(threading.Thread):
                     "Accept":random.choice(accepts),
                     "User-Agent": random.choice(self.useragents),
                     "Cache-Control": "no-cache",
-                    "Content-Encoding": random.choice(contentencodings),
+                    "Accept-Encoding": random.choice(contentencodings),
                     "Accept-Charset": f"{random.choice(acceptcharset)};q=0.7,*;q=0.7",
                     "Referer": random.choice(self.referers) + buildblock(random.randint(5,10)),
                     "Keep-Alive": str(random.randint(110,120)),
@@ -187,7 +187,7 @@ class httpcall(threading.Thread):
                     "User-Agent": random.choice(self.useragents),
                     "Cache-Control": "no-cache",
                     "Accept-Charset": f"{random.choice(acceptcharset)};q=0.7,*;q=0.7",
-                    "Content-Encoding": random.choice(contentencodings),
+                    "Accept-Encoding": random.choice(contentencodings),
                     "content-type": random.choice(contenttypes),#
                     "Referer": random.choice(self.referers) + buildblock(random.randint(5,10)),
                     "Keep-Alive": str(random.randint(110,120)),
@@ -211,7 +211,7 @@ class httpcall(threading.Thread):
                     "User-Agent": random.choice(self.useragents),
                     "Cache-Control": "no-cache",
                     "Accept-Charset": f"{random.choice(acceptcharset)};q=0.7,*;q=0.7",
-                    "Content-Encoding": random.choice(contentencodings),
+                    "Accept-Encoding": random.choice(contentencodings),
                     "content-type": random.choice(contenttypes),#
                     "Referer": random.choice(self.referers) + buildblock(random.randint(5,10)),
                     "Accept-Language": f"{langcodea},{langcodea};q=0.{random.randint(4,9)}",
