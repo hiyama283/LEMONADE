@@ -37,7 +37,7 @@ print(f"""{Fore.LIGHTYELLOW_EX}
                         ██      █████   ██ ████ ██ ██    ██ ██ ██  ██ ███████ ██   ██ █████   
                         ██      ██      ██  ██  ██ ██    ██ ██  ██ ██ ██   ██ ██   ██ ██      
                         ███████ ███████ ██      ██  ██████  ██   ████ ██   ██ ██████  ███████ {Fore.RESET}
-                                                    {Fore.LIGHTMAGENTA_EX}version 2.5{Fore.RESET}   {Fore.RESET}
+                                                    {Fore.LIGHTMAGENTA_EX}version 2.5{Fore.RESET}
 
 
 
