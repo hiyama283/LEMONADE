@@ -157,7 +157,7 @@ class httpcall(threading.Thread):
             for k in range(len(url)):
                 try:
                     useurl = url[k]
-                    usehost = usehost
+                    usehost = host[k]
                     proxy = ""
                     if self.useproxies == True:
                         proxy = proxies.pop(0)
