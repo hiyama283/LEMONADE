@@ -128,9 +128,15 @@ referer_list()
 for hosta in host:
     referers.append(f"https://{hosta}/")
 
+acceptcharset = ["ISO-8859-1","shift-jis","US-ASCII","utf-8"]
+contenttypes = ["text/plain","application/json","text/csv","application/pdf","application/zip","application/xslm","text/css"]
+contentencodings = ["gzip","compress","identity","deflate","br"]
+langcodea = lang()
 class httpcall(threading.Thread):
     def __init__(self):
         global config
+        global useragents
+        global referers
         threading.Thread.__init__(self)
         self.randomdelay = config["thread"]["randomdelay"]
         self.payload = json.dumps(config["payload"])
@@ -153,6 +159,10 @@ class httpcall(threading.Thread):
         global proxies
         global url
         global host
+        global langcodea
+        global contentencodings
+        global contenttypes
+        global acceptcharset
         for __ in range(5):
             for k in range(len(url)):
                 try:
@@ -167,11 +177,10 @@ class httpcall(threading.Thread):
                         param_joiner = "?"
                 except IndexError:
                     continue
-                langcodea = lang()
-                contentencodings = ["gzip","compress","identity","deflate","br"]
-                contenttypes = ["text/plain","application/json","text/csv","application/pdf","application/zip","application/xslm","text/css"]
+                #contentencodings = ["gzip","compress","identity","deflate","br"]
+                #contenttypes = ["text/plain","application/json","text/csv","application/pdf","application/zip","application/xslm","text/css"]
                 accepts = [f"text/html,{random.choice(contenttypes)},{random.choice(contenttypes)},{random.choice(contenttypes)};q=0.{random.randint(4,9)}",f"*/*;q=0.{random.randint(4,9)}","*/*"]
-                acceptcharset = ["ISO-8859-1","shift-jis","US-ASCII","utf-8"]
+                #acceptcharset = ["ISO-8859-1","shift-jis","US-ASCII","utf-8"]
                 tmp = []
                 tmp.append({
                     "Accept":random.choice(accepts),
